@@ -17,12 +17,18 @@ import lx.edu.springboot.vo.AddrBookVO;
 
 @Controller
 public class AddrBookController {
+
+    private final HelloController helloController;
 	
 	@Autowired
 	ApplicationContext context;
 
 	@Autowired
 	AddrBookDAO dao;
+
+    AddrBookController(HelloController helloController) {
+        this.helloController = helloController;
+    }
 
 	@RequestMapping("/insert.do")
 	public String insert(AddrBookVO vo) throws Exception {
@@ -43,6 +49,21 @@ public class AddrBookController {
 		req.setAttribute("data", list);
 		return "addrbook_list";
 	}
+	
+	@RequestMapping("edit.do")
+	public String edit(@RequestParam("abId") int abId, HttpServletRequest req) throws Exception {
+		AddrBookVO vo = dao.getDBById(abId);
+		req.setAttribute("ab", vo);
+		return "addrbook_edit_form";
+	}
+
+	// 아래 삭제함 - edit은 뭐가 다른거지
+	@RequestMapping("/update.do")
+	public String update(AddrBookVO vo) throws Exception {
+		System.out.println("vo=" + vo);
+		dao.updateDB(vo);
+		return "redirect:addrbook_list.do";
+	}
 
 //	@RequestMapping("addrbook_list.do")
 //	public String list(HttpSession session, HttpServletRequest req) throws Exception {
@@ -62,12 +83,7 @@ public class AddrBookController {
 		result.setViewName("addrbook_edit_form");
 		return result;
 	}
-	
-	@RequestMapping("update.do")
-	public String update(AddrBookVO vo) throws Exception {
-		dao.updateDB(vo);
-		return "redirect:addrbook_list.do";
-	}
+
 
 	
 
