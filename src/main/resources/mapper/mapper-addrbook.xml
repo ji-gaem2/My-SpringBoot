@@ -23,6 +23,18 @@
 		#{abBirth}, #{abTel}, #{abMemo})
 	</insert>
 
+	<update id="updateDB" parameterType="lx.edu.springboot.vo.AddrBookVO">
+		update addrbook
+		<trim prefix="SET" suffixOverrides=", ">   
+			<if test="abName != null"> ab_name = #{abName}, </if>
+			<if test="abEmail != null"> ab_email = #{abEmail}, </if>
+			<if test="abTel != null"> ab_tel = #{abTel}, </if>
+			<if test="abComdept != null"> ab_comdept = #{abComdept}, </if>
+			<if test="abBirth != null"> ab_birth = #{abBirth}, </if>
+			<if test="abMemo != null"> ab_memo = #{abMemo}, </if>
+		</trim>
+		where ab_id = #{abId}
+	</update>
 	<!-- 과제 delete -->
 	<delete id="deleteDB" parameterType="int">
 		delete from addrbook
@@ -31,7 +43,7 @@
 	</delete>
 
 	<!-- 과제 -->
-	<update id="updateDB" parameterType="lx.edu.springboot.vo.AddrBookVO">
+<!-- 	<update id="updateDB" parameterType="lx.edu.springboot.vo.AddrBookVO">
 		 UPDATE addrbook
        SET ab_name    = #{abName},
            ab_email   = #{abEmail},
@@ -41,7 +53,7 @@
            ab_memo    = #{abMemo}
      WHERE ab_id = #{abId}
 	</update>
-	
+ -->	
 	<select id="getDBById" parameterType="int" resultType="lx.edu.springboot.vo.AddrBookVO">
 		select AB_ID abId
 		,AB_NAME abName

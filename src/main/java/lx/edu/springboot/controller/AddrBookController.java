@@ -61,7 +61,7 @@ public class AddrBookController {
 	@RequestMapping("/update.do")
 	public String update(AddrBookVO vo) throws Exception {
 		System.out.println("vo=" + vo);
-		//dao.update(vo);
+		dao.updateDB(vo);
 		return "redirect:addrbook_list.do";
 	}
 
